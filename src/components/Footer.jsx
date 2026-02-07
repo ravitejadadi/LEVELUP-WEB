@@ -12,7 +12,7 @@ const Footer = () => {
                                 <BarChart3 className="text-white w-5 h-5" />
                             </div>
                             <span className="text-xl font-bold font-jakarta text-white">
-                                LevelUp
+                                LevelU
                             </span>
                         </div>
 
