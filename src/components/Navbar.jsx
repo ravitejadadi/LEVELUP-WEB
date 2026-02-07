@@ -72,7 +72,7 @@ const Navbar = () => {
                     </span>
                 </a>
 
-                {/* Desktop Links */}
+                {/* Desktop Links - hidden on mobile */}
                 <div className="hidden md:flex items-center gap-8">
                     {navLinks.map((link) => (
                         <a
@@ -90,9 +90,9 @@ const Navbar = () => {
                     </a>
                 </div>
 
-                {/* Mobile Toggle */}
+                {/* Mobile Toggle Button */}
                 <button
-                    className="md:hidden text-white p-2 relative z-110 bg-white/5 rounded-lg border border-white/10 transition-colors hover:bg-white/10"
+                    className="md:hidden text-white p-2.5 relative z-200 bg-white/5 rounded-xl border border-white/10 transition-all hover:bg-white/10 active:scale-95"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     aria-label="Toggle Menu"
                 >
@@ -103,53 +103,66 @@ const Navbar = () => {
                 <AnimatePresence>
                     {isMenuOpen && (
                         <motion.div
-                            initial="closed"
-                            animate="open"
-                            exit="closed"
-                            variants={menuVariants}
-                            className="fixed inset-0 bg-background-dark md:hidden z-100 flex flex-col pt-24"
+                            initial={{ opacity: 0, x: '100%' }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: '100%' }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                            className="fixed inset-0 bg-background-dark md:hidden z-150 flex flex-col pt-28"
                         >
-                            {/* Decorative Background Element */}
-                            <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary-brand/20 blur-[120px] rounded-full pointer-events-none" />
-                            <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-secondary-brand/10 blur-[120px] rounded-full pointer-events-none" />
+                            {/* Decorative Background Elements */}
+                            <div className="absolute top-[-10%] right-[-10%] w-[70%] h-[50%] bg-primary-brand/10 blur-[120px] rounded-full pointer-events-none" />
+                            <div className="absolute bottom-[-10%] left-[-10%] w-[70%] h-[50%] bg-secondary-brand/5 blur-[120px] rounded-full pointer-events-none" />
 
-                            <div className="flex flex-col h-full pb-12 px-8 overflow-y-auto relative z-10">
-                                <div className="flex flex-col gap-6">
-                                    {navLinks.map((link) => (
+                            <div className="flex flex-col h-full pb-10 px-8 overflow-y-auto relative z-10">
+                                <div className="space-y-4">
+                                    {navLinks.map((link, idx) => (
                                         <motion.a
-                                            variants={itemVariants}
+                                            initial={{ opacity: 0, x: 20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0.1 + idx * 0.05 }}
                                             key={link.name}
                                             href={link.href}
-                                            className="group flex items-center justify-between text-4xl font-bold text-white hover:text-primary-brand transition-colors"
+                                            className="group flex items-center justify-between py-2"
                                             onClick={() => setIsMenuOpen(false)}
                                         >
-                                            <span>{link.name}</span>
-                                            <ChevronRight className="w-8 h-8 opacity-0 -translate-x-4 transition-all group-hover:opacity-100 group-hover:translate-x-0 text-primary-brand" />
+                                            <span className="text-5xl font-bold text-white group-hover:text-primary-brand transition-colors tracking-tight">
+                                                {link.name}
+                                            </span>
+                                            <div className="w-12 h-12 rounded-full border border-white/5 group-hover:border-primary-brand/30 flex items-center justify-center transition-all group-hover:translate-x-1">
+                                                <ChevronRight className="w-6 h-6 text-white/20 group-hover:text-primary-brand" />
+                                            </div>
                                         </motion.a>
                                     ))}
                                 </div>
 
-                                <motion.div variants={itemVariants} className="mt-auto pt-10 border-t border-white/10">
-                                    <p className="text-muted-brand text-sm mb-6">Ready to transform your brand?</p>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.4 }}
+                                    className="mt-auto pt-8 border-t border-white/5"
+                                >
+                                    <p className="text-muted-brand text-sm mb-6 flex items-center gap-2">
+                                        <span className="w-1 h-1 rounded-full bg-primary-brand" />
+                                        Ready to scale your business?
+                                    </p>
                                     <a
                                         href="#contact"
-                                        className="flex items-center justify-center gap-3 w-full py-5 bg-linear-to-r from-primary-brand to-secondary-brand text-white rounded-2xl text-xl font-bold shadow-xl shadow-primary-brand/20 hover:scale-[1.02] transition-transform active:scale-95"
+                                        className="flex items-center justify-center gap-3 w-full py-5 bg-linear-to-r from-primary-brand to-secondary-brand text-white rounded-2xl text-xl font-bold shadow-2xl shadow-primary-brand/20 hover:scale-[1.02] transition-transform active:scale-95"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         Get Started
                                         <ArrowRight className="w-6 h-6" />
                                     </a>
 
-                                    <div className="flex justify-center gap-6 mt-10">
-                                        <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-muted-brand hover:text-white hover:border-primary-brand/50 transition-all cursor-pointer">
-                                            <span className="text-xs font-bold">TW</span>
+                                    <div className="flex justify-between items-center mt-10">
+                                        <div className="flex gap-4">
+                                            {['Twitter', 'LinkedIn', 'Instagram'].map((social) => (
+                                                <div key={social} className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-muted-brand hover:text-white hover:border-primary-brand/50 transition-all cursor-pointer">
+                                                    <span className="text-[10px] font-bold uppercase">{social.slice(0, 2)}</span>
+                                                </div>
+                                            ))}
                                         </div>
-                                        <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-muted-brand hover:text-white hover:border-primary-brand/50 transition-all cursor-pointer">
-                                            <span className="text-xs font-bold">LI</span>
-                                        </div>
-                                        <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-muted-brand hover:text-white hover:border-primary-brand/50 transition-all cursor-pointer">
-                                            <span className="text-xs font-bold">IG</span>
-                                        </div>
+                                        <span className="text-[10px] text-white/20 font-medium uppercase tracking-widest">©2024 LevelUp</span>
                                     </div>
                                 </motion.div>
                             </div>
