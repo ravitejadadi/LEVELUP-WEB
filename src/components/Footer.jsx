@@ -12,7 +12,7 @@ const Footer = () => {
                                 <BarChart3 className="text-white w-5 h-5" />
                             </div>
                             <span className="text-xl font-bold font-jakarta text-white">
-                                LevelU
+                                LevelUp
                             </span>
                         </div>
 
@@ -25,7 +25,7 @@ const Footer = () => {
 
                     <div className="flex flex-col items-center md:items-end gap-2">
                         <p className="text-sm text-muted-brand font-medium">
-                            © 2024 LevelUp Marketing. All rights reserved.
+                            © 2024 LevelRp Marketing. All rights reserved.
                         </p>
                         <div className="flex gap-4">
                             <a href="#" className="text-xs text-muted-brand hover:text-white transition-colors">Privacy Policy</a>
